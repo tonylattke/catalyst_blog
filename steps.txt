@@ -1,0 +1,13 @@
+catalyst.pl blog
+
+script/blog_server.pl -r
+
+script/blog_create.pl view HTML TT
+
+script/blog_create.pl controller post
+script/blog_create.pl controller login
+script/blog_create.pl controller logout
+
+sqlite3 myapp.db < database_blog.sql
+
+script/blog_create.pl model MyDB DBIC::Schema MySchema create=static component=TimeStamp dbi:SQLite:myapp.db on_connect_do="PRAGMA foreign_keys = ON"

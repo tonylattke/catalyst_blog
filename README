@@ -1,0 +1,9 @@
+#Blog using Catalyst
+
+Version 1.0
+
+Requirements:
+- Catalyst 5.90070
+- SQLite3
+
+Run script/blog_server.pl -r to test the application.
