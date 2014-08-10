@@ -1,0 +1,58 @@
+[% INCLUDE base.tt2 %]
+
+[% BLOCK title_web %]
+- [% post.name %]
+[% END %]
+
+<!-- ########################## principal_content ######################### -->
+[% BLOCK principal_content %]
+    <h1 id="[% post.id %]">
+        [% post.name %]
+        [% IF c.user_exists %]
+            <a class="btn" href="/post/edit/[% post.id %]">Edit</a>
+            <a class="btn btn-primary pull-right delete_post">X</a>
+        [% END %]
+    </h1>
+    <p>
+        <span class="glyphicon glyphicon-time"></span> Posted on [% post.date %]
+    </p>
+
+    [% post.text %]
+
+    <hr>
+
+    <!-- the comment box -->
+    <div class="well">
+        <form role="form" method="post" action="/make_comment/[% post.id %]">
+            <h4>Name:</h4>
+            <div class="form-group">
+                <textarea name="comment_name" class="form-control" rows="1"></textarea>
+            </div>
+            <h4>Leave a Comment:</h4>
+            <div class="form-group">
+                <textarea name="comment_text" class="form-control" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <hr>
+
+    <!-- the comments -->
+    [% IF comments == 0 %]
+        <p>No comments</p>
+    [% ELSE %]
+        [% WHILE (comment = comments.next) %]
+            <h3> [% comment.name %]
+                <small> [% comment.date %]</small>
+            </h3>
+            [% comment.text %]
+        [% END %]
+    [% END %]
+[% END %]
+
+[% BLOCK sidebar_content %]
+[% END %]
+
+[% BLOCK javascript_content %]
+[% END %]

@@ -30,8 +30,15 @@ The root page (/)
 
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
+    $c->stash->{posts} = $c->model('MyDB::Post');
+ 	my @years;
+	$c->stash->{years} = @years;
+    $c->stash->{template} = 'home.tt2';
+}
 
-    $c->stash->{template} = 'base.tt2';
+sub home :Global {
+	my ( $self, $c ) = @_;
+	$c->res->redirect($c->uri_for('/', {}));
 }
 
 =head2 default

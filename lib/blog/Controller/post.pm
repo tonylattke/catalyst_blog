@@ -21,10 +21,11 @@ Catalyst Controller.
 
 =cut
 
-sub index :Path :Args(0) {
-    my ( $self, $c ) = @_;
-
-    $c->response->body('Matched blog::Controller::post in post.');
+sub index :Path :Args(1) {
+    my ( $self, $c, $id ) = @_;
+    $c->stash->{post} = $c->model('MyDB::Post')->find($id);
+    $c->stash->{comments} = $c->model('MyDB::Comment');
+    $c->stash->{template} = 'post.tt2';
 }
 
 

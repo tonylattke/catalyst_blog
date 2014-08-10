@@ -1,0 +1,51 @@
+[% INCLUDE base.tt2 %]
+
+[% BLOCK title_web %]
+
+[% END %]
+
+[% BLOCK principal_content %]
+	[% IF posts == 0 %]
+		<p>No posts</p>
+	[% ELSE %]
+		[% WHILE (post = posts.next) %]
+			<h1 id="[% post.id %]">
+	            <a href="/post/[% post.id %]">[% post.name %]</a>
+	            
+	            [% IF c.user_exists %]
+	                <a class="btn" href="/post/edit/[% post.id %]">Edit</a>
+	                <a class="btn btn-primary pull-right delete_post">X</a>
+	            [% END %]
+	        </h1>
+	        <p>
+	            <span class="glyphicon glyphicon-time"></span> Posted on [% post.date %]
+	        </p>
+	        [% post.text %]
+	        </br>
+	        </br>
+	        <a class="btn btn-primary" href="/post/[% post.id %]">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+
+	        <hr>
+		[% END %]
+	[% END %]
+[% END %]
+
+[% BLOCK sidebar_content %]
+
+<!-- list of years -->
+<div class="well">
+    <h4>Last posts</h4>
+    <ul class="list-unstyled">
+    	[% WHILE (y = years.next) %]
+        <li>
+            <a href="/year/[% y %]">[% y %]</a>
+        </li>
+        [% END %]
+    </ul>
+</div>
+<!-- list of years -->
+[% END %]
+
+[% BLOCK javascript_content %]
+<script src="[% c.uri_for('/static/js/home.js') %]"></script>
+[% END %]

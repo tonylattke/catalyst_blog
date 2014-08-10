@@ -7,7 +7,7 @@
     <meta name="description" content="Blog with Catalyst Framework">
     <meta name="author" content="Tony Lattke">
 
-    <title>Catalyst - Blog {% block title_web %} {% endblock title_web %}</title>
+    <title>Catalyst - Blog [% PROCESS title_web %]</title>
 
     <!-- This template com from http://startbootstrap.com/all-templates -->
     <!-- Bootstrap core CSS -->
@@ -35,27 +35,13 @@
 
         <div class="row">
             <div class="col-lg-8">
-                {% block principal_content %}
-                {% endblock principal_content %}
+            	[% PROCESS principal_content %]
             </div>
 
             <div class="col-lg-4">
-                {% block sidebar_content %}
-                <!-- list of years -->
-                <div class="well">
-                    <h4>Last posts</h4>
-                    <ul class="list-unstyled">
-                        {% for y in years %}
-                        <li>
-                            <a href="/year/{{y}}">{{y}}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <!-- list of years -->
-                {% endblock sidebar_content %}
+            	[% PROCESS sidebar_content %]
 
-                {% if user.is_authenticated %}
+                [% IF c.user_exists %]
                 <!-- New Post -->
                 <div class="well">
                     <a href="/post/new">Create Post</a>
@@ -67,7 +53,7 @@
                     <a href="/logout">Logout</a>
                 </div>
                 <!-- Logout -->
-                {% endif %}
+                [% END %]
 
                 <div class="well">
                     <a href="/posts.json">Export all posts to Json</a>
@@ -98,8 +84,7 @@
     <script src="[% c.uri_for('/static/js/bootstrap.js') %]"></script>
     <script src="[% c.uri_for('/static/js/base.js') %]"></script>
 
-    {% block javascript_content %}
-    {% endblock javascript_content %}
+    [% PROCESS javascript_content %]
 
 </body>
 
