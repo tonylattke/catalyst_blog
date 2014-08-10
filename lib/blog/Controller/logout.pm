@@ -23,8 +23,13 @@ Catalyst Controller.
 
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
+ 
+    # Clear the user's state
+    $c->logout;
+ 	$c->flash->{status_msg} = "Logout Successfull.";
 
-    $c->response->body('Matched blog::Controller::logout in logout.');
+    # Send the user to the starting point
+    $c->response->redirect($c->uri_for('/'));
 }
 
 

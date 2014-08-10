@@ -16,9 +16,7 @@
     <p>
         <span class="glyphicon glyphicon-time"></span> Posted on [% post.date %]
     </p>
-
     [% post.text %]
-
     <hr>
 
     <!-- the comment box -->
@@ -51,6 +49,7 @@
     [% END %]
 [% END %]
 
+<!-- ########################### sidebar_content ########################## -->
 [% BLOCK sidebar_content %]
 [% END %]
 

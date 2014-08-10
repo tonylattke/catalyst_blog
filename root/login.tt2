@@ -1,0 +1,50 @@
+[% INCLUDE base.tt2 %]
+
+[% BLOCK title_web %]
+[% END %]
+
+<!-- ########################## principal_content ######################### -->
+[% BLOCK principal_content %]
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+        <form role="form" method="post" action="[% c.uri_for('/login') %]">
+            <div class="row">
+                <div class="form-group col-xs-12 floating-label-form-group">
+                    <label for="email">Username</label>
+                    <input class="form-control" name="username" placeholder="Username" autofocus="autofocus">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xs-12 floating-label-form-group">
+                    <label for="email">Password</label>
+                    <input class="form-control" type="password" name="password" placeholder="Password">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="form-group col-xs-12">
+                    <button type="submit" class="btn btn-lg btn-primary">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+[% END %]
+
+<!-- ########################### sidebar_content ########################## -->
+[% BLOCK sidebar_content %]
+<div class="well">
+    <p>Welcome</p>
+    [% IF c.user_exists %]
+        <p>Introduce your username and password</p>
+    [% ELSE %]
+        <span class="message">[% status_msg || c.flash.status_msg %]</span>
+        <span class="error">[% error_msg %]</span>
+    [% END %]    
+</div>
+[% END %]
+
+[% BLOCK javascript_content %]
+[% END %]
