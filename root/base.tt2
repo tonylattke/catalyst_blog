@@ -44,7 +44,7 @@
                 [% IF c.user_exists %]
 	                <!-- New Post -->
 	                <div class="well">
-	                    <a href="/post/new">Create Post</a>
+	                    <a href="/post_new">Create Post</a>
 	                </div>
 	                <!-- New Post -->
 
@@ -62,7 +62,7 @@
                 [% END %]
 
                 <div class="well">
-                    <a href="/posts.json">Export all posts to Json</a>
+                    <a href="/posts_json">Export all posts to Json</a>
                 </div>
                 
 

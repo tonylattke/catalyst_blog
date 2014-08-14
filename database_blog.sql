@@ -41,6 +41,8 @@ CREATE TABLE post_comment (
 );
 
 -- Load up some initial test data
+
+-- Users
 INSERT INTO users VALUES (1, 'tony', 'mypass', 'tonylattke@gmail.com', 'Tony',  'Lattke', 1);
 INSERT INTO users VALUES (2, 'enrique', 'mypass', 'enriqueurbaneja@gmail.com', 'Enrique', 'Urbaneja',  1);
 INSERT INTO role VALUES (1, 'admin');
@@ -48,3 +50,7 @@ INSERT INTO role VALUES (2, 'user');
 INSERT INTO user_role VALUES (1, 1);
 INSERT INTO user_role VALUES (1, 2);
 INSERT INTO user_role VALUES (2, 2);
+
+-- Posts
+INSERT INTO post VALUES (1, 'Hello World', 'It works!', '2014-08-08 12:10:50');
+INSERT INTO post VALUES (2, 'Testing', 'Works!', '2014-08-08 12:10:50');

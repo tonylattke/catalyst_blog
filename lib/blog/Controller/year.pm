@@ -1,4 +1,4 @@
-package blog::Controller::post;
+package blog::Controller::year;
 use Moose;
 use namespace::autoclean;
 
@@ -6,7 +6,7 @@ BEGIN { extends 'Catalyst::Controller'; }
 
 =head1 NAME
 
-blog::Controller::post - Catalyst Controller
+blog::Controller::year - Catalyst Controller
 
 =head1 DESCRIPTION
 
@@ -22,12 +22,17 @@ Catalyst Controller.
 =cut
 
 sub index :Path :Args(1) {
-    my ( $self, $c, $id ) = @_;
-    $c->stash->{post} = $c->model('MyDB::Post')->find($id);
-    $c->stash->{comments} = $c->model('MyDB::Comment');
-    $c->stash->{template} = 'post.tt2';
+    my ( $self, $c, $year ) = @_;
+    my @all_posts = $c->model('MyDB::Post')->search({},{});
+    my @posts;
+    foreach my $post (@all_posts) {
+    	if ($post->date->year == $year) {
+    		push @posts, $post;
+    	}
+    }
+    $c->stash->{posts} = \@posts;
+    $c->stash->{template} = 'home.tt2';
 }
-
 
 
 

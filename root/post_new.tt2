@@ -1,0 +1,49 @@
+[% INCLUDE base.tt2 %]
+
+[% BLOCK title_web %]
+: New Post
+[% END %]
+
+<!-- ########################## principal_content ######################### -->
+[% BLOCK principal_content %]
+<div class="well">
+
+    <form method="post" id="form_new_post" action="/post_new_do" role="form" >    
+        <h4>Name:</h4>
+        <div class="form-group">
+            <textarea name="name" id="post_name" class="form-control" rows="1" autofocus="autofocus"></textarea>
+        </div>
+        <h4>Text:</h4>
+        <div class="form-group">
+            <textarea name="text" id="post_text" class="form-control"></textarea>
+        </div>
+        
+        <div id="create_post" class="btn btn-primary">Create Post</div>
+    </form>
+    
+</div>
+
+<hr>
+[% END %]
+
+<!-- ########################### sidebar_content ########################## -->
+[% BLOCK sidebar_content %]
+
+<!-- list of years -->
+<div class="well">
+    <h4>Last posts</h4>
+    <ul class="list-unstyled">
+        [% FOREACH y IN years %]
+        <li>
+            <a href="/year/[% y %]">[% y %]</a>
+        </li>
+        [% END %]
+    </ul>
+</div>
+<!-- list of years -->
+[% END %]
+
+<!-- ########################## javascript_content ######################## -->
+[% BLOCK javascript_content %]
+<script src="[% c.uri_for('/static/js/post_new.js') %]"></script>
+[% END %]

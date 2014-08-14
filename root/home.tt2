@@ -4,11 +4,12 @@
 
 [% END %]
 
+<!-- ########################## principal_content ######################### -->
 [% BLOCK principal_content %]
 	[% IF posts == 0 %]
 		<p>No posts</p>
 	[% ELSE %]
-		[% WHILE (post = posts.next) %]
+		[% FOREACH post IN posts %]
 			<h1 id="[% post.id %]">
 	            <a href="/post/[% post.id %]">[% post.name %]</a>
 	            
@@ -30,13 +31,14 @@
 	[% END %]
 [% END %]
 
+<!-- ########################### sidebar_content ########################## -->
 [% BLOCK sidebar_content %]
 
 <!-- list of years -->
 <div class="well">
     <h4>Last posts</h4>
     <ul class="list-unstyled">
-    	[% WHILE (y = years.next) %]
+    	[% FOREACH y IN years %]
         <li>
             <a href="/year/[% y %]">[% y %]</a>
         </li>
@@ -46,6 +48,7 @@
 <!-- list of years -->
 [% END %]
 
+<!-- ########################## javascript_content ######################## -->
 [% BLOCK javascript_content %]
 <script src="[% c.uri_for('/static/js/home.js') %]"></script>
 [% END %]

@@ -1,6 +1,7 @@
 package blog::Controller::Root;
 use Moose;
 use namespace::autoclean;
+use JSON;
 
 BEGIN { extends 'Catalyst::Controller' }
 
@@ -30,9 +31,20 @@ The root page (/)
 
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
-    $c->stash->{posts} = $c->model('MyDB::Post');
+    my @posts = $c->model('MyDB::Post')->search({},{order_by => 'id desc'});
+    $c->stash->{posts} = \@posts;
  	my @years;
-	$c->stash->{years} = @years;
+ 	if (@posts > 0) {
+ 		my $newer_year = $posts[0]->date->year;
+ 		my $older_year = $posts[-1]->date->year;
+ 		push @years, $newer_year;
+ 		if ($older_year != $newer_year) {
+ 			for (my $x = $newer_year; $x >= $older_year; $x--) {
+				push @years, $x;
+			}
+ 		}
+ 	}
+	$c->stash->{years} = \@years;
     $c->stash->{template} = 'home.tt2';
 }
 
@@ -41,6 +53,42 @@ sub home :Global {
 	$c->res->redirect($c->uri_for('/', {}));
 }
 
+sub posts_json : Global {
+	my ( $self, $c ) = @_;
+	my @posts = $c->model('MyDB::Post')->search({},{});
+	my @dictionary;
+	foreach my $post (@posts) {
+		my %aux = {
+			'id' => $post->id,
+			'name' => $post->name,
+			'text' => $post->text,
+			};
+		push @dictionary, %aux;
+	}
+	my $result = {@dictionary};
+	$c->response->body(to_json($result));
+}
+
+sub post_new :Global {
+    my ( $self, $c ) = @_;
+    $c->stash->{template} = 'post_new.tt2';
+}
+
+sub post_new_do :Global {
+    my ( $self, $c ) = @_;
+	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime();
+    $year += 1900;
+    $mon++;
+	$c->model('MyDB::Post')->create(
+		{
+			name => $c->request->params->{name}, 
+			text => $c->request->params->{text}, 
+			date => "$year-$mon-$mday $hour:$min:$sec"
+		}
+	);
+	$c->flash->{status_msg} = "Create Post Successfull.";
+	$c->res->redirect($c->uri_for('/', {}));
+}
 =head2 default
 
 Standard 404 error page
