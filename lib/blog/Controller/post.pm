@@ -31,8 +31,7 @@ sub current_time {
 sub index :Path :Args(1) {
     my ( $self, $c, $id ) = @_;
     $c->stash->{post} = $c->model('MyDB::Post')->find($id);
-    my @posts_comments= $c->model('MyDB::PostComment')->search({post_id => $id});
-    $c->stash->{comments} = $c->model('MyDB::Comment');
+    $c->stash->{comments} = $c->model('MyDB::Comment')->search({post => $id});
     $c->stash->{template} = 'post.tt2';
 }
 
@@ -78,23 +77,24 @@ sub make_comment :Local :Args(1) {
     # Create comment
     my $comment = $c->model('MyDB::Comment')->create(
 		{
+			post => $id,
 			name => $c->request->params->{comment_name}, 
 			text => $c->request->params->{comment_text}, 
 			date => current_time()
-		}
-	);
-
-    # Create relation post and comment
-    $c->model('MyDB::PostComment')->create(
-		{
-			post_id => $id,
-			comment_id => $comment->id
 		}
 	);
     
     # Update post
     $c->res->redirect($c->uri_for("/post/$id", {}));
 }
+
+sub delete :Local :Args(1) {
+    my ( $self, $c, $id ) = @_;
+    my $post = $c->model('MyDB::Post')->find($id);
+	$post->delete;
+    $c->res->redirect($c->uri_for("/", {}));
+}
+
 =encoding utf8
 
 =head1 AUTHOR

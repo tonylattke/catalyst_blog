@@ -6,6 +6,9 @@
 
 <!-- ########################## principal_content ######################### -->
 [% BLOCK principal_content %]
+    [% IF c.user_exists %]
+        <form method="post" id="form_delete_post" action="/post/delete/[% post.id %]"> </form>
+    [% END %]
     <h1 id="[% post.id %]">
         [% post.name %]
         [% IF c.user_exists %]
@@ -53,5 +56,7 @@
 [% BLOCK sidebar_content %]
 [% END %]
 
+<!-- ########################## javascript_content ######################## -->
 [% BLOCK javascript_content %]
+<script src="[% c.uri_for('/static/js/home.js') %]"></script>
 [% END %]

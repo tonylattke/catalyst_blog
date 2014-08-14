@@ -86,34 +86,24 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
-=head2 post_comments
+=head2 comments
 
 Type: has_many
 
-Related object: L<MySchema::Result::PostComment>
+Related object: L<MySchema::Result::Comment>
 
 =cut
 
 __PACKAGE__->has_many(
-  "post_comments",
-  "MySchema::Result::PostComment",
-  { "foreign.post_id" => "self.id" },
+  "comments",
+  "MySchema::Result::Comment",
+  { "foreign.post" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
-=head2 comments
 
-Type: many_to_many
-
-Composing rels: L</post_comments> -> comment
-
-=cut
-
-__PACKAGE__->many_to_many("comments", "post_comments", "comment");
-
-
-# Created by DBIx::Class::Schema::Loader v0.07039 @ 2014-08-10 01:23:48
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:pPZN4ZRB41uYNXDZ/N2B3g
+# Created by DBIx::Class::Schema::Loader v0.07039 @ 2014-08-15 01:29:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:C9zKwyQqIyDR1UjM5ZSbMQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

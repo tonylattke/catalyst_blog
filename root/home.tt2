@@ -10,6 +10,10 @@
 		<p>No posts</p>
 	[% ELSE %]
 		[% FOREACH post IN posts %]
+			[% IF c.user_exists %]
+				<form method="post" id="form_delete_post" action="/post/delete/[% post.id %]"> </form>
+			[% END %]
+
 			<h1 id="[% post.id %]">
 	            <a href="/post/[% post.id %]">[% post.name %]</a>
 	            

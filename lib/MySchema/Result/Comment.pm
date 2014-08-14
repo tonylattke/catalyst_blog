@@ -44,6 +44,12 @@ __PACKAGE__->table("comment");
   is_auto_increment: 1
   is_nullable: 0
 
+=head2 post
+
+  data_type: 'integer'
+  is_foreign_key: 1
+  is_nullable: 1
+
 =head2 name
 
   data_type: 'text'
@@ -64,6 +70,8 @@ __PACKAGE__->table("comment");
 __PACKAGE__->add_columns(
   "id",
   { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
+  "post",
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
   "name",
   { data_type => "text", is_nullable => 1 },
   "text",
@@ -86,34 +94,29 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
-=head2 post_comments
+=head2 post
 
-Type: has_many
+Type: belongs_to
 
-Related object: L<MySchema::Result::PostComment>
+Related object: L<MySchema::Result::Post>
 
 =cut
 
-__PACKAGE__->has_many(
-  "post_comments",
-  "MySchema::Result::PostComment",
-  { "foreign.comment_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
+__PACKAGE__->belongs_to(
+  "post",
+  "MySchema::Result::Post",
+  { id => "post" },
+  {
+    is_deferrable => 0,
+    join_type     => "LEFT",
+    on_delete     => "CASCADE",
+    on_update     => "CASCADE",
+  },
 );
 
-=head2 posts
 
-Type: many_to_many
-
-Composing rels: L</post_comments> -> post
-
-=cut
-
-__PACKAGE__->many_to_many("posts", "post_comments", "post");
-
-
-# Created by DBIx::Class::Schema::Loader v0.07039 @ 2014-08-10 01:23:48
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:LeaRT3O8zBykzk3fOxD+wQ
+# Created by DBIx::Class::Schema::Loader v0.07039 @ 2014-08-15 01:29:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3lH7/urDN6Nds2gRyXJ5lQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
