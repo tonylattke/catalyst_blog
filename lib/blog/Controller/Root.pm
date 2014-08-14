@@ -69,26 +69,6 @@ sub posts_json : Global {
 	$c->response->body(to_json($result));
 }
 
-sub post_new :Global {
-    my ( $self, $c ) = @_;
-    $c->stash->{template} = 'post_new.tt2';
-}
-
-sub post_new_do :Global {
-    my ( $self, $c ) = @_;
-	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime();
-    $year += 1900;
-    $mon++;
-	$c->model('MyDB::Post')->create(
-		{
-			name => $c->request->params->{name}, 
-			text => $c->request->params->{text}, 
-			date => "$year-$mon-$mday $hour:$min:$sec"
-		}
-	);
-	$c->flash->{status_msg} = "Create Post Successfull.";
-	$c->res->redirect($c->uri_for('/', {}));
-}
 =head2 default
 
 Standard 404 error page

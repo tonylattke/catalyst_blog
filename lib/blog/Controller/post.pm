@@ -21,16 +21,80 @@ Catalyst Controller.
 
 =cut
 
+sub current_time {
+	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime();
+    $year += 1900;
+    $mon++;
+    return "$year-$mon-$mday $hour:$min:$sec";
+}
+
 sub index :Path :Args(1) {
     my ( $self, $c, $id ) = @_;
     $c->stash->{post} = $c->model('MyDB::Post')->find($id);
+    my @posts_comments= $c->model('MyDB::PostComment')->search({post_id => $id});
     $c->stash->{comments} = $c->model('MyDB::Comment');
     $c->stash->{template} = 'post.tt2';
 }
 
 
+sub _new :Local :Path('new') {
+    my ( $self, $c ) = @_;
+    $c->stash->{template} = 'post_new.tt2';
+}
 
+sub _new_do :Local :Path('new_do') {
+    my ( $self, $c ) = @_;
+	$c->model('MyDB::Post')->create(
+		{
+			name => $c->request->params->{name}, 
+			text => $c->request->params->{text}, 
+			date => current_time()
+		}
+	);
+	$c->flash->{status_msg} = "Create Post Successfull.";
+	$c->res->redirect($c->uri_for('/', {}));
+}
 
+sub edit :Local :Args(1) {
+    my ( $self, $c, $id ) = @_;
+    $c->stash->{post} = $c->model('MyDB::Post')->find($id);
+    $c->stash->{comments} = $c->model('MyDB::Comment');
+    $c->stash->{template} = 'post_edit.tt2';
+}
+
+sub modify :Local :Args(1) {
+    my ( $self, $c, $id ) = @_;
+    my $post = $c->model('MyDB::Post')->find($id);
+	$post->name($c->request->params->{name});
+	$post->text($c->request->params->{text});
+	$post->date(current_time());
+	$post->update;
+    $c->res->redirect($c->uri_for("/post/$id", {}));
+}
+
+sub make_comment :Local :Args(1) {
+    my ( $self, $c, $id ) = @_;
+    
+    # Create comment
+    my $comment = $c->model('MyDB::Comment')->create(
+		{
+			name => $c->request->params->{comment_name}, 
+			text => $c->request->params->{comment_text}, 
+			date => current_time()
+		}
+	);
+
+    # Create relation post and comment
+    $c->model('MyDB::PostComment')->create(
+		{
+			post_id => $id,
+			comment_id => $comment->id
+		}
+	);
+    
+    # Update post
+    $c->res->redirect($c->uri_for("/post/$id", {}));
+}
 =encoding utf8
 
 =head1 AUTHOR

@@ -21,7 +21,7 @@
 
     <!-- the comment box -->
     <div class="well">
-        <form role="form" method="post" action="/make_comment/[% post.id %]">
+        <form role="form" method="post" action="/post/make_comment/[% post.id %]">
             <h4>Name:</h4>
             <div class="form-group">
                 <textarea name="comment_name" class="form-control" rows="1"></textarea>

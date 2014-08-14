@@ -44,7 +44,7 @@
                 [% IF c.user_exists %]
 	                <!-- New Post -->
 	                <div class="well">
-	                    <a href="/post_new">Create Post</a>
+	                    <a href="/post/new">Create Post</a>
 	                </div>
 	                <!-- New Post -->
 

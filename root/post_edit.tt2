@@ -1,0 +1,34 @@
+[% INCLUDE base.tt2 %]
+
+[% BLOCK title_web %]
+: [% post.name %]
+[% END %]
+
+<!-- ########################## principal_content ######################### -->
+[% BLOCK principal_content %]
+<div class="well">
+    <form method="post" id="form_modify_post" action="/post/modify/[% post.id %]">
+        <h4>Name:</h4>
+        <div class="form-group">
+            <textarea name="name" id="post_name" class="form-control" rows="1">[% post.name %]</textarea>
+        </div>
+        <h4>Text:</h4>
+        <div class="form-group">
+            <textarea name="text" id="post_text" class="form-control">[% post.text %]</textarea>
+        </div>
+        <div id="modify_post" class="btn btn-primary">Update</div>
+    </form>
+    
+</div>
+
+<hr>
+[% END %]
+
+<!-- ########################### sidebar_content ########################## -->
+[% BLOCK sidebar_content %]
+[% END %]
+
+<!-- ########################## javascript_content ######################## -->
+[% BLOCK javascript_content %]
+<script src="[% c.uri_for('/static/js/post_edit.js') %]"></script>
+[% END %]

@@ -6,4 +6,4 @@ Requirements:
 - Catalyst 5.90070
 - SQLite3
 
-Run script/blog_server.pl -r to test the application.
+Run script/blog_server.pl -r to test the application (-r reload with every change on code).
