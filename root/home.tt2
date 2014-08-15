@@ -37,19 +37,7 @@
 
 <!-- ########################### sidebar_content ########################## -->
 [% BLOCK sidebar_content %]
-
-<!-- list of years -->
-<div class="well">
-    <h4>Last posts</h4>
-    <ul class="list-unstyled">
-    	[% FOREACH y IN years %]
-        <li>
-            <a href="/year/[% y %]">[% y %]</a>
-        </li>
-        [% END %]
-    </ul>
-</div>
-<!-- list of years -->
+[% INCLUDE years.tt2 %]
 [% END %]
 
 <!-- ########################## javascript_content ######################## -->

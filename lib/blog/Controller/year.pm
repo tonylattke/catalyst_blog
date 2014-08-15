@@ -33,13 +33,11 @@ sub index :Path :Args(1) {
     $c->stash->{template} = 'home.tt2';
 }
 
-
-
 =encoding utf8
 
 =head1 AUTHOR
 
-Tony Lattke,,,
+Tony Lattke
 
 =head1 LICENSE
 

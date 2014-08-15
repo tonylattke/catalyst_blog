@@ -26,6 +26,7 @@
 
 <!-- ########################### sidebar_content ########################## -->
 [% BLOCK sidebar_content %]
+[% INCLUDE years.tt2 %]
 [% END %]
 
 <!-- ########################## javascript_content ######################## -->

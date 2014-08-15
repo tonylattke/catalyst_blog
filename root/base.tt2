@@ -62,7 +62,7 @@
                 [% END %]
 
                 <div class="well">
-                    <a href="/posts_json">Export all posts to Json</a>
+                    <a href="/posts.json">Export all posts to Json</a>
                 </div>
                 
 
